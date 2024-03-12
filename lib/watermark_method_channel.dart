@@ -28,9 +28,9 @@ class MethodChannelWatermark extends WatermarkPlatform {
       {
         'text': text,
         'filePath': filePath,
-        'x': x.toString(),
-        'y': y.toString(),
-        'textSize': textSize.toString(),
+        'x': x,
+        'y': y,
+        'textSize': textSize,
         'color': color,
         'backgroundTextColor': backgroundTextColor,
         'quality': quality,

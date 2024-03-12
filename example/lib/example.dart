@@ -127,12 +127,12 @@ class _ExampleWidgetState extends State<ExampleWidget> {
                     ),
                   ),
                 ),
-                if(finalFile != null)
-                Image.file(
-                  finalFile!,
-                  width: 400,
-                  height: 400,
-                )
+                if (finalFile != null)
+                  Image.file(
+                    finalFile!,
+                    width: 400,
+                    height: 400,
+                  )
               ],
             ),
           ),
@@ -206,20 +206,23 @@ class _ExampleWidgetState extends State<ExampleWidget> {
   Future<String?> _addImageTextWatermark() async {
     final image = await _watermarkPlugin.addTextWatermark(
       filePath: photo!.path,
-      text: 'Test watermark text',
-      x: 500,
-      y: 400,
-      textSize: 250,
-      color: Colors.purpleAccent.value,
-      backgroundTextColor: Colors.black.value,
-      quality: 100,
+      text: 'Test watermark text Test watermark text Test watermark 7',
+      x: 100,
+      y: 500,
+      textSize: 100,
+      color: Colors.black.value,
+      backgroundTextColor: Colors.orange.value,
+      quality: 50,
+      backgroundTextPaddingBottom: 100,
+      backgroundTextPaddingLeft: 100,
+      backgroundTextPaddingRight: 300,
+      backgroundTextPaddingTop: 500,
       imageFormat: ImageFormat.jpeg,
     );
     debugPrint('add image watermark: $image');
     if (image != null) {
-      final result  = await saveEditedImage(image);
       setState(() {
-        finalFile = result;
+        finalFile = File(image);
       });
     }
     return image;
@@ -238,25 +241,10 @@ class _ExampleWidgetState extends State<ExampleWidget> {
     );
     debugPrint('add image watermark: $image');
     if (image != null) {
-      final result  = await saveEditedImage(image);
       setState(() {
-        finalFile = result;
+        finalFile = File(image);
       });
     }
     return image;
-  }
-
-  Future<File?> saveEditedImage(String imagePath) async {
-    try {
-      Directory directory = await getApplicationDocumentsDirectory();
-      String savePath = '${directory.path}/watermarked_image.jpeg';
-
-      final result = File(imagePath).copy(savePath);
-      debugPrint('Saved file: $savePath');
-       return result;
-    } catch (e) {
-      debugPrint('Error saving file: $e');
-      return null;
-    }
   }
 }

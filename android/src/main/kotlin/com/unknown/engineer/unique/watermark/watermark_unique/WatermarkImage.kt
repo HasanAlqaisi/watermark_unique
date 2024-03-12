@@ -28,9 +28,9 @@ class WatermarkImage : MethodChannel.MethodCallHandler {
             "addTextWatermark" -> {
                 val filePath = call.argument<String?>("filePath")
                 val text = call.argument<String?>("text")
-                val x = call.argument<String?>("x")
-                val y = call.argument<String?>("y")
-                val textSize = call.argument<String>("textSize")
+                val x = call.argument<Int?>("x")
+                val y = call.argument<Int?>("y")
+                val textSize = call.argument<Int>("textSize")
                 val color = call.argument<Long>("color")?.toInt()
                 val backgroundTextColor = call.argument<Long>("backgroundTextColor")?.toInt()
                 val quality = call.argument<Int>("quality")
@@ -174,7 +174,6 @@ class WatermarkImage : MethodChannel.MethodCallHandler {
             e.printStackTrace()
         }
     }
-
     private fun addImageWatermark(
         filePath: String,
         watermarkImagePath: String,

@@ -35,10 +35,10 @@ final image = await _watermarkPlugin.addTextWatermark(
   color: Colors.purpleAccent.value, // color of text
   backgroundTextColor: Colors.black.value, // color of background text (optional)
   quality: 100, // quality of image with watermark
-  backgroundTextPaddingLeft: 12, // left padding for text if there is a background color for text (optional)
-  backgroundTextPaddingTop: 12, // top padding for text if there is a background color for text (optional)
-  backgroundTextPaddingRight: 12, // right padding for text if there is a background color for text (optional)
-  backgroundTextPaddingBottom: 12, // bottom padding for text if there is a background color for text (optional)
+  backgroundTextPaddingLeft: 12, // padding of background text (optional)
+  backgroundTextPaddingTop: 12, // padding of background text (optional)
+  backgroundTextPaddingRight: 12, // padding of background text (optional)
+  backgroundTextPaddingBottom: 12, // padding of background text (optional)
   imageFormat: ImageFormat.jpeg, // image format that you will use to compress
 );
 ```
