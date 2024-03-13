@@ -20,6 +20,7 @@ class _ExampleWidgetState extends State<ExampleWidget> {
   File? photo;
   File? watermark;
   File? finalFile;
+  Uint8List? finalUint8List;
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +110,21 @@ class _ExampleWidgetState extends State<ExampleWidget> {
                     ),
                   ),
                 ),
+                ElevatedButton(
+                  onPressed: _addTextWatermarkUint8List,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    elevation: 4,
+                  ),
+                  child: const Text(
+                    'Add text watermark to photo Uint8List',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
                   child: ElevatedButton(
@@ -127,12 +143,36 @@ class _ExampleWidgetState extends State<ExampleWidget> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: ElevatedButton(
+                    onPressed: _addImageWatermarkUint8List,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      elevation: 4,
+                    ),
+                    child: const Text(
+                      'Add watermark image to photo Uint8List',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
                 if (finalFile != null)
                   Image.file(
                     finalFile!,
                     width: 400,
                     height: 400,
-                  )
+                  ),
+                if (finalUint8List != null)
+                  Image.memory(
+                    finalUint8List!,
+                    width: 400,
+                    height: 400,
+                  ),
               ],
             ),
           ),
@@ -203,7 +243,7 @@ class _ExampleWidgetState extends State<ExampleWidget> {
     }
   }
 
-  Future<String?> _addImageTextWatermark() async {
+  Future<void> _addImageTextWatermark() async {
     final image = await _watermarkPlugin.addTextWatermark(
       filePath: photo!.path,
       text: 'Test watermark text Test watermark text Test watermark 7',
@@ -225,10 +265,9 @@ class _ExampleWidgetState extends State<ExampleWidget> {
         finalFile = File(image);
       });
     }
-    return image;
   }
 
-  Future<String?> _addWatermarkImageToPhoto() async {
+  Future<void> _addWatermarkImageToPhoto() async {
     final image = await _watermarkPlugin.addImageWatermark(
       filePath: photo!.path,
       watermarkImagePath: watermark!.path,
@@ -245,6 +284,44 @@ class _ExampleWidgetState extends State<ExampleWidget> {
         finalFile = File(image);
       });
     }
-    return image;
+  }
+
+  Future<void> _addTextWatermarkUint8List() async {
+    final image = await _watermarkPlugin.addTextWatermarkUint8List(
+      filePath: photo!,
+      text: 'Test watermark text Test watermark text Test watermark 7',
+      x: 100,
+      y: 500,
+      textSize: 100,
+      color: Colors.black.value,
+      backgroundTextColor: Colors.orange.value,
+      backgroundTextPaddingBottom: 10,
+      backgroundTextPaddingLeft: 10,
+      backgroundTextPaddingRight: 10,
+      backgroundTextPaddingTop: 10,
+    );
+    debugPrint('add image watermark: $image');
+    if (image != null) {
+      setState(() {
+        finalUint8List = image;
+      });
+    }
+  }
+
+  Future<void> _addImageWatermarkUint8List() async {
+    final image = await _watermarkPlugin.addImageWatermarkUint8List(
+      filePath: photo!,
+      watermarkImagePath: watermark!,
+      x: 100,
+      y: 200,
+      watermarkWidth: 500,
+      watermarkHeight: 500,
+    );
+    debugPrint('add image watermark: $image');
+    if (image != null) {
+      setState(() {
+        finalUint8List = image;
+      });
+    }
   }
 }

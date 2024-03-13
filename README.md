@@ -26,7 +26,7 @@ Check on pub.dev: https://pub.dev/packages/watermark_unique
 ## Usage
 An example of how you can add text to an image:
 ```dart
-final image = await _watermarkPlugin.addTextWatermark(
+final image = await watermarkPlugin.addTextWatermark(
   filePath: photo!.path, // image file path
   text: 'Test watermark text', // watermark text
   x: 500, // position by x
@@ -45,7 +45,7 @@ final image = await _watermarkPlugin.addTextWatermark(
 
 An example of how you can add a watermark to an image:
 ```dart
-final image = await _watermarkPlugin.addImageWatermark(
+final image = await watermarkPlugin.addImageWatermark(
   filePath: photo!.path, // image file path
   watermarkImagePath: watermark!.path, // watermark image file path
   x: 500, // position by x
@@ -56,6 +56,36 @@ final image = await _watermarkPlugin.addImageWatermark(
   watermarkHeight: 300,  // watermark image height
 );
 ```
+
+An example of how you can add text to an image and get results via Uint8List:
+```dart
+final image = await watermarkPlugin.addTextWatermarkUint8List(
+  filePath: photo!.path, // image file path
+  text: 'Test watermark text', // watermark text
+  x: 500, // position by x
+  y: 400, // position by y
+  textSize: 250, // text size
+  color: Colors.purpleAccent.value, // color of text
+  backgroundTextColor: Colors.black.value, // color of background text (optional)
+  backgroundTextPaddingLeft: 12, // padding of background text (optional)
+  backgroundTextPaddingTop: 12, // padding of background text (optional)
+  backgroundTextPaddingRight: 12, // padding of background text (optional)
+  backgroundTextPaddingBottom: 12, // padding of background text (optional)
+);
+```
+
+An example of how you can add a watermark to an image and get results via Uint8List:
+```dart
+final image = await watermarkPlugin.addImageWatermarkUint8List(
+  filePath: photo!.path, // image file path
+  watermarkImagePath: watermark!.path, // watermark image file path
+  x: 500, // position by x
+  y: 400, // position by x
+  watermarkWidth: 300, // watermark image width
+  watermarkHeight: 300,  // watermark image height
+);
+```
+
 
 
 ## Example Android screenshots

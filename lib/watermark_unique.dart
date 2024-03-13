@@ -1,5 +1,9 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:watermark_unique/watermark_bridge.dart';
+
 import 'image_format.dart';
-import 'watermark_platform_interface.dart';
 
 class WatermarkUnique {
   Future<String?> addTextWatermark({
@@ -17,7 +21,7 @@ class WatermarkUnique {
     int? backgroundTextPaddingRight,
     required ImageFormat imageFormat,
   }) {
-    return WatermarkPlatform.instance.addTextWatermark(
+    return WatermarkBridge.instance.addTextWatermark(
       filePath,
       text,
       x,
@@ -44,7 +48,7 @@ class WatermarkUnique {
     required int quality,
     required ImageFormat imageFormat,
   }) {
-    return WatermarkPlatform.instance.addImageWatermark(
+    return WatermarkBridge.instance.addImageWatermark(
       filePath,
       watermarkImagePath,
       x,
@@ -53,6 +57,52 @@ class WatermarkUnique {
       watermarkHeight,
       quality,
       imageFormat,
+    );
+  }
+
+  Future<Uint8List?> addTextWatermarkUint8List({
+    required File filePath,
+    required String text,
+    required int x,
+    required int y,
+    required int textSize,
+    required int color,
+    int? backgroundTextColor,
+    int? backgroundTextPaddingTop,
+    int? backgroundTextPaddingBottom,
+    int? backgroundTextPaddingLeft,
+    int? backgroundTextPaddingRight,
+  }) {
+    return WatermarkBridge.instance.addTextWatermarkUint8List(
+      filePath,
+      text,
+      x,
+      y,
+      textSize,
+      color,
+      backgroundTextColor,
+      backgroundTextPaddingTop,
+      backgroundTextPaddingBottom,
+      backgroundTextPaddingLeft,
+      backgroundTextPaddingRight,
+    );
+  }
+
+  Future<Uint8List?> addImageWatermarkUint8List({
+    required File filePath,
+    required File watermarkImagePath,
+    required int x,
+    required int y,
+    required int watermarkWidth,
+    required int watermarkHeight,
+  }) {
+    return WatermarkBridge.instance.addImageWatermarkUint8List(
+      filePath,
+      watermarkImagePath,
+      x,
+      y,
+      watermarkWidth,
+      watermarkHeight,
     );
   }
 }
