@@ -5,6 +5,9 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:watermark_unique/watermark_manager.dart';
 import 'image_format.dart';
 
+/// Interface for adding watermarks to images.
+///
+/// This interface defines methods for adding both text and image watermarks to images.
 abstract class WatermarkBridge extends PlatformInterface {
   WatermarkBridge() : super(token: _token);
 
@@ -19,6 +22,9 @@ abstract class WatermarkBridge extends PlatformInterface {
     _instance = instance;
   }
 
+  /// Adds a text watermark to the image at the specified location with the given parameters.
+  ///
+  /// Returns a [String] representing the path to the watermarked image.
   Future<String?> addTextWatermark(
     String filePath,
     String text,
@@ -35,6 +41,9 @@ abstract class WatermarkBridge extends PlatformInterface {
     ImageFormat imageFormat,
   );
 
+  /// Adds an image watermark to the image at the specified location with the given parameters.
+  ///
+  /// Returns a [String] representing the path to the watermarked image.
   Future<String?> addImageWatermark(
     String filePath,
     String watermarkImagePath,
@@ -46,6 +55,9 @@ abstract class WatermarkBridge extends PlatformInterface {
     ImageFormat imageFormat,
   );
 
+  /// Adds a text watermark to the image at the specified location with the given parameters.
+  ///
+  /// Returns a [Uint8List] representing the watermarked image.
   Future<Uint8List?> addTextWatermarkUint8List(
     File filePath,
     String text,
@@ -60,6 +72,9 @@ abstract class WatermarkBridge extends PlatformInterface {
     int? backgroundTextPaddingRight,
   );
 
+  /// Adds an image watermark to the image at the specified location with the given parameters.
+  ///
+  /// Returns a [Uint8List] representing the watermarked image.
   Future<Uint8List?> addImageWatermarkUint8List(
     File filePath,
     File watermarkImagePath,

@@ -7,6 +7,10 @@ import 'package:watermark_unique/watermark_bridge.dart';
 import 'image_format.dart';
 import 'dart:ui' as ui;
 
+/// Class responsible for managing watermarks.
+///
+/// This class implements the [WatermarkBridge] interface and provides methods
+/// for adding watermarks to images.
 class WatermarkManager extends WatermarkBridge {
   @visibleForTesting
   final watermarkImageChannel = const MethodChannel('WatermarkImage');

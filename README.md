@@ -1,6 +1,6 @@
 # watermark_unique
 
-watermark_unique is a flutter package to add text and image watermarks on an image or video. You can customize the watermark's position, color, background color, and padding.
+watermark_unique is a flutter package to add text and image watermarks on an image. You can customize the watermark's position, color, background color, and padding.
 Check on pub.dev: https://pub.dev/packages/watermark_unique
 
 ## Documentation
@@ -8,8 +8,7 @@ Check on pub.dev: https://pub.dev/packages/watermark_unique
 
 - Add text to image
 - Add watermark to image
-- Add text to video
-- Add watermark to video
+- Get result via File or Uint8List
 
 **Parameters for image that you can change**
 
@@ -89,6 +88,6 @@ final image = await watermarkPlugin.addImageWatermarkUint8List(
 
 
 ## Example Android screenshots
-<img src="https://github.com/engineer-unknown/watermark_unique/blob/main/android_example.png" height="400">
-<img src="https://github.com/engineer-unknown/watermark_unique/blob/main/android_example_image_watermark.png" height="400">
-<img src="https://github.com/engineer-unknown/watermark_unique/blob/main/android_example_text.png" height="400">
+<img src="https://github.com/engineer-unknown/watermark_unique/raw/main/android_example.png" height="400">
+<img src="https://github.com/engineer-unknown/watermark_unique/raw/main/android_example_image_watermark.png" height="400">
+<img src="https://github.com/engineer-unknown/watermark_unique/raw/main/android_example_text.png" height="400">

@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:watermark_unique/watermark_bridge.dart';
-
 import 'image_format.dart';
 
+/// Class for adding watermarks to images.
+///
+/// This class provides high-level methods for adding watermarks to images,
+/// abstracting the implementation details.
 class WatermarkUnique {
   Future<String?> addTextWatermark({
     required String filePath,
