@@ -87,7 +87,7 @@ final image = await watermarkPlugin.addImageWatermarkUint8List(
 
 
 
-## Example Android screenshots
+## Example screenshots
 <img src="https://github.com/engineer-unknown/watermark_unique/raw/main/android_example.png" height="400">
 <img src="https://github.com/engineer-unknown/watermark_unique/raw/main/android_example_image_watermark.png" height="400">
 <img src="https://github.com/engineer-unknown/watermark_unique/raw/main/android_example_text.png" height="400">

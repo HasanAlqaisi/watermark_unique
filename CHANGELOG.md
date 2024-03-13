@@ -1,3 +1,7 @@
+## 0.0.3
+
+* Update screenshots
+
 ## 0.0.2
 
 * Update documentation
