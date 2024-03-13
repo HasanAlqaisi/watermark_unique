@@ -60,8 +60,8 @@ class MethodChannelWatermark extends WatermarkPlatform {
       {
         'filePath': filePath,
         'watermarkImagePath': watermarkImagePath,
-        'x': x.toString(),
-        'y': y.toString(),
+        'x': x,
+        'y': y,
         'watermarkWidth': watermarkWidth,
         'watermarkHeight': watermarkHeight,
         'quality': quality,

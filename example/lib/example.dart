@@ -232,12 +232,12 @@ class _ExampleWidgetState extends State<ExampleWidget> {
     final image = await _watermarkPlugin.addImageWatermark(
       filePath: photo!.path,
       watermarkImagePath: watermark!.path,
-      x: 500,
-      y: 400,
+      x: 100,
+      y: 200,
       quality: 100,
       imageFormat: ImageFormat.jpeg,
-      watermarkWidth: 300,
-      watermarkHeight: 300,
+      watermarkWidth: 500,
+      watermarkHeight: 500,
     );
     debugPrint('add image watermark: $image');
     if (image != null) {

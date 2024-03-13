@@ -56,7 +56,35 @@ public class WatermarkUniquePlugin: NSObject, FlutterPlugin {
                     result(FlutterError(code: "UNKNOWN_ERROR", message: "Unknown error occurred", details: nil))
                 }
             }
+        case "addImageWatermark":
+            guard let filePath = arguments["filePath"] as? String,
+                  let watermarkImagePath = arguments["watermarkImagePath"] as? String,
+                  let x = arguments["x"] as? CGFloat,
+                  let y = arguments["y"] as? CGFloat,
+                  let watermarkWidth = arguments["watermarkWidth"] as? CGFloat,
+                  let watermarkHeight = arguments["watermarkHeight"] as? CGFloat,
+                  let quality = arguments["quality"] as? CGFloat,
+                  let imageFormat = arguments["imageFormat"] as? String else {
+                result(FlutterError(code: "ARGUMENT_ERROR", message: "Missing arguments", details: nil))
+                return
+            }
 
+            addImageWatermark(filePath: filePath,
+                              watermarkImagePath: watermarkImagePath,
+                              x: x,
+                              y: y,
+                              watermarkWidth: watermarkWidth,
+                              watermarkHeight: watermarkHeight,
+                              quality: quality,
+                              imageFormat: imageFormat) { (newFilePath, error) in
+                if let error = error {
+                    result(FlutterError(code: "PROCESSING_ERROR", message: "Failed to process image: \(error.localizedDescription)", details: nil))
+                } else if let newFilePath = newFilePath {
+                    result(newFilePath)
+                } else {
+                    result(FlutterError(code: "UNKNOWN_ERROR", message: "Unknown error occurred", details: nil))
+                }
+            }
         case "getPlatformVersion":
             result("iOS " + UIDevice.current.systemVersion)
         default:
@@ -136,6 +164,46 @@ public class WatermarkUniquePlugin: NSObject, FlutterPlugin {
             } else {
                 completion(nil, NSError(domain: "ImageProcessorErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to save image"]))
             }
+        }
+    }
+
+    func addImageWatermark(filePath: String,
+                           watermarkImagePath: String,
+                           x: CGFloat,
+                           y: CGFloat,
+                           watermarkWidth: CGFloat,
+                           watermarkHeight: CGFloat,
+                           quality: CGFloat,
+                           imageFormat: String,
+                           completion: @escaping (String?, Error?) -> Void) {
+
+        guard let image = UIImage(contentsOfFile: filePath),
+              let watermarkImage = UIImage(contentsOfFile: watermarkImagePath) else {
+              completion(nil, NSError(domain: "READ_ERROR", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ошибка чтения файла изображения"]))
+            return
+        }
+
+        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+
+        image.draw(in: CGRect(origin: .zero, size: image.size))
+
+        watermarkImage.draw(in: CGRect(x: x, y: y, width: watermarkWidth, height: watermarkHeight))
+
+        guard let newImage = UIGraphicsGetImageFromCurrentImageContext(),
+              let compressedData = newImage.jpegData(compressionQuality: (quality / 100)) else {
+            completion(nil, NSError(domain: "CONVERSION_ERROR", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ошибка преобразования данных изображения"]))
+            return
+        }
+
+        UIGraphicsEndImageContext()
+
+        let newFilePath = (filePath as NSString).deletingLastPathComponent + "/\(UUID().uuidString).\(imageFormat)"
+
+        do {
+            try compressedData.write(to: URL(fileURLWithPath: newFilePath), options: .atomic)
+            completion(newFilePath, nil)
+        } catch {
+            completion(nil, NSError(domain: "ImageProcessorErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ошибка сохранения изображения"]))
         }
     }
 }

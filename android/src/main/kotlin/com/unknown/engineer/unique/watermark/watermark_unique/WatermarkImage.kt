@@ -8,11 +8,8 @@ import java.util.*
 import android.graphics.*
 import java.io.File
 import java.io.FileOutputStream
-
-
 class WatermarkImage : MethodChannel.MethodCallHandler {
     private var context: Context? = null
-
     companion object {
         fun registerWith(messenger: BinaryMessenger, context: Context): MethodChannel {
             val channel = MethodChannel(messenger, "WatermarkImage")
@@ -22,7 +19,6 @@ class WatermarkImage : MethodChannel.MethodCallHandler {
             return  channel
         }
     }
-
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
             "addTextWatermark" -> {
@@ -69,8 +65,8 @@ class WatermarkImage : MethodChannel.MethodCallHandler {
             "addImageWatermark" -> {
                 val filePath = call.argument<String?>("filePath")
                 val watermarkImagePath = call.argument<String?>("watermarkImagePath")
-                val x = call.argument<String?>("x")
-                val y = call.argument<String?>("y")
+                val x = call.argument<Int?>("x")
+                val y = call.argument<Int?>("y")
                 val watermarkWidth = call.argument<Int?>("watermarkWidth")
                 val watermarkHeight = call.argument<Int?>("watermarkHeight")
                 val quality = call.argument<Int>("quality")
@@ -96,7 +92,6 @@ class WatermarkImage : MethodChannel.MethodCallHandler {
             else -> result.notImplemented()
         }
     }
-
     private fun addTextWatermark(
         text: String,
         filePath: String,
