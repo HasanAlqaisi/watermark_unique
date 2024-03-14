@@ -23,7 +23,7 @@ Check on pub.dev: https://pub.dev/packages/watermark_unique
 - Image format that you will use to compress
 
 ## Usage
-An example of how you can add text to an image:
+An example of how you can add text to an image (only IOS or Android):
 ```dart
 final image = await watermarkPlugin.addTextWatermark(
   filePath: photo!.path, // image file path
@@ -42,7 +42,7 @@ final image = await watermarkPlugin.addTextWatermark(
 );
 ```
 
-An example of how you can add a watermark to an image:
+An example of how you can add a watermark to an image (only IOS or Android):
 ```dart
 final image = await watermarkPlugin.addImageWatermark(
   filePath: photo!.path, // image file path
@@ -56,7 +56,7 @@ final image = await watermarkPlugin.addImageWatermark(
 );
 ```
 
-An example of how you can add text to an image and get results via Uint8List:
+An example of how you can add text to an image and get results via Uint8List (IOS || Android || WEB):
 ```dart
 final image = await watermarkPlugin.addTextWatermarkUint8List(
   filePath: photo!.path, // image file path
@@ -73,7 +73,7 @@ final image = await watermarkPlugin.addTextWatermarkUint8List(
 );
 ```
 
-An example of how you can add a watermark to an image and get results via Uint8List:
+An example of how you can add a watermark to an image and get results via Uint8List (IOS || Android || WEB):
 ```dart
 final image = await watermarkPlugin.addImageWatermarkUint8List(
   filePath: photo!.path, // image file path

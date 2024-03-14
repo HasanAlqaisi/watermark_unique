@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:watermark_unique/watermark_bridge.dart';
 import 'image_format.dart';
@@ -63,7 +62,7 @@ class WatermarkUnique {
   }
 
   Future<Uint8List?> addTextWatermarkUint8List({
-    required File filePath,
+    required Uint8List filePath,
     required String text,
     required int x,
     required int y,
@@ -91,8 +90,8 @@ class WatermarkUnique {
   }
 
   Future<Uint8List?> addImageWatermarkUint8List({
-    required File filePath,
-    required File watermarkImagePath,
+    required Uint8List filePath,
+    required Uint8List watermarkImagePath,
     required int x,
     required int y,
     required int watermarkWidth,

@@ -1,8 +1,8 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:watermark_unique/image_format.dart';
 import 'package:watermark_unique/watermark_unique.dart';
 
@@ -18,6 +18,8 @@ class ExampleWidget extends StatefulWidget {
 class _ExampleWidgetState extends State<ExampleWidget> {
   final _watermarkPlugin = WatermarkUnique();
   File? photo;
+  Uint8List? photoUint8List;
+  Uint8List? watermarkUint8List;
   File? watermark;
   File? finalFile;
   Uint8List? finalUint8List;
@@ -186,9 +188,10 @@ class _ExampleWidgetState extends State<ExampleWidget> {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
       final imageBytes = await image.readAsBytes();
-      final savedFile = await _saveImage(image: imageBytes);
+      final savedFile = File(image.path);
       setState(() {
         photo = savedFile;
+        photoUint8List = imageBytes;
       });
     } on PlatformException catch (e) {
       debugPrint('Failed to pick image from gallery: $e');
@@ -201,46 +204,15 @@ class _ExampleWidgetState extends State<ExampleWidget> {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
       final imageBytes = await image.readAsBytes();
-      final savedFile = await _saveImage(image: imageBytes);
+      final savedFile = File(image.path);
       setState(() {
         watermark = savedFile;
+        watermarkUint8List = imageBytes;
       });
     } on PlatformException catch (e) {
       debugPrint('Failed to pick image from gallery: $e');
     }
     return;
-  }
-
-  Future<File?> _saveImage({
-    required Uint8List image,
-  }) async {
-    try {
-      debugPrint('${image.length} SIZE OF BYTES');
-
-      final directory = (Platform.isIOS
-          ? await getApplicationDocumentsDirectory()
-          : await getExternalStorageDirectory()) as Directory;
-
-      if (!await directory.exists()) {
-        await directory.create(recursive: true);
-      }
-      String name = '${DateTime.now().millisecondsSinceEpoch}.jpeg';
-
-      String filePath = '${directory.path}/$name';
-
-      final savedFile = await File(filePath).writeAsBytes(image);
-
-      if (await savedFile.exists()) {
-        debugPrint('Image saved successfully: ${savedFile.path}');
-        return savedFile;
-      } else {
-        debugPrint('Error saving image. File does not exist.');
-        return null;
-      }
-    } catch (e) {
-      debugPrint('Error saving image: $e');
-      return null;
-    }
   }
 
   Future<void> _addImageTextWatermark() async {
@@ -288,17 +260,17 @@ class _ExampleWidgetState extends State<ExampleWidget> {
 
   Future<void> _addTextWatermarkUint8List() async {
     final image = await _watermarkPlugin.addTextWatermarkUint8List(
-      filePath: photo!,
+      filePath: photoUint8List!,
       text: 'Test watermark text Test watermark text Test watermark 7',
       x: 100,
-      y: 500,
-      textSize: 100,
+      y: 100,
+      textSize: 24,
       color: Colors.black.value,
       backgroundTextColor: Colors.orange.value,
-      backgroundTextPaddingBottom: 10,
+      backgroundTextPaddingBottom: 50,
       backgroundTextPaddingLeft: 10,
       backgroundTextPaddingRight: 10,
-      backgroundTextPaddingTop: 10,
+      backgroundTextPaddingTop: 50,
     );
     debugPrint('add image watermark: $image');
     if (image != null) {
@@ -310,8 +282,8 @@ class _ExampleWidgetState extends State<ExampleWidget> {
 
   Future<void> _addImageWatermarkUint8List() async {
     final image = await _watermarkPlugin.addImageWatermarkUint8List(
-      filePath: photo!,
-      watermarkImagePath: watermark!,
+      filePath: photoUint8List!,
+      watermarkImagePath: watermarkUint8List!,
       x: 100,
       y: 200,
       watermarkWidth: 500,

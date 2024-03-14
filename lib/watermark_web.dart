@@ -1,80 +1,19 @@
-import 'package:flutter/foundation.dart';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:watermark_unique/watermark_bridge.dart';
-import 'image_format.dart';
 import 'dart:ui' as ui;
 
-/// Class responsible for managing watermarks.
+/// A web implementation of the for adding watermarks to images.
 ///
-/// This class implements the [WatermarkBridge] interface and provides methods
-/// for adding watermarks to images.
-class WatermarkManager extends WatermarkBridge {
-  @visibleForTesting
-  final watermarkImageChannel = const MethodChannel('WatermarkImage');
+/// This class provides high-level methods for adding watermarks to images,
+/// abstracting the implementation details.
+class WatermarkWeb extends WatermarkBridge {
+  /// Constructs a WatermarkWeb
+  WatermarkWeb();
 
-  @override
-  Future<String?> addTextWatermark(
-    String filePath,
-    String text,
-    int x,
-    int y,
-    int textSize,
-    int color,
-    int? backgroundTextColor,
-    int quality,
-    int? backgroundTextPaddingTop,
-    int? backgroundTextPaddingBottom,
-    int? backgroundTextPaddingLeft,
-    int? backgroundTextPaddingRight,
-    ImageFormat imageFormat,
-  ) async {
-    final result = await watermarkImageChannel.invokeMethod<String?>(
-      'addTextWatermark',
-      {
-        'text': text,
-        'filePath': filePath,
-        'x': x,
-        'y': y,
-        'textSize': textSize,
-        'color': color,
-        'backgroundTextColor': backgroundTextColor,
-        'quality': quality,
-        'backgroundTextPaddingTop': backgroundTextPaddingTop,
-        'backgroundTextPaddingBottom': backgroundTextPaddingBottom,
-        'backgroundTextPaddingLeft': backgroundTextPaddingLeft,
-        'backgroundTextPaddingRight': backgroundTextPaddingRight,
-        'imageFormat': imageFormat.name,
-      },
-    );
-    return result;
-  }
-
-  @override
-  Future<String?> addImageWatermark(
-    String filePath,
-    String watermarkImagePath,
-    int x,
-    int y,
-    int watermarkWidth,
-    int watermarkHeight,
-    int quality,
-    ImageFormat imageFormat,
-  ) async {
-    final result = await watermarkImageChannel.invokeMethod<String?>(
-      'addImageWatermark',
-      {
-        'filePath': filePath,
-        'watermarkImagePath': watermarkImagePath,
-        'x': x,
-        'y': y,
-        'watermarkWidth': watermarkWidth,
-        'watermarkHeight': watermarkHeight,
-        'quality': quality,
-        'imageFormat': imageFormat.name,
-      },
-    );
-    return result;
+  static void registerWith(Registrar registrar) {
+    WatermarkBridge.instance = WatermarkWeb();
   }
 
   @override

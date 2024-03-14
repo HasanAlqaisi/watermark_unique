@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -23,6 +22,7 @@ abstract class WatermarkBridge extends PlatformInterface {
   }
 
   /// Adds a text watermark to the image at the specified location with the given parameters.
+  /// Use just for IOS or Android. For WEB version you should use addTextWatermarkUint8List()
   ///
   /// Returns a [String] representing the path to the watermarked image.
   Future<String?> addTextWatermark(
@@ -39,9 +39,13 @@ abstract class WatermarkBridge extends PlatformInterface {
     int? backgroundTextPaddingLeft,
     int? backgroundTextPaddingRight,
     ImageFormat imageFormat,
-  );
+  ) async {
+    throw UnimplementedError(
+        'Not implemented in WEB. You should use addTextWatermarkUint8List()');
+  }
 
   /// Adds an image watermark to the image at the specified location with the given parameters.
+  /// Use just for IOS or Android. For WEB version you should use addImageWatermarkUint8List()
   ///
   /// Returns a [String] representing the path to the watermarked image.
   Future<String?> addImageWatermark(
@@ -53,13 +57,16 @@ abstract class WatermarkBridge extends PlatformInterface {
     int watermarkHeight,
     int quality,
     ImageFormat imageFormat,
-  );
+  ) async {
+    throw UnimplementedError(
+        'Not implemented in WEB. You should use addImageWatermarkUint8List()');
+  }
 
   /// Adds a text watermark to the image at the specified location with the given parameters.
   ///
   /// Returns a [Uint8List] representing the watermarked image.
   Future<Uint8List?> addTextWatermarkUint8List(
-    File filePath,
+    Uint8List filePath,
     String text,
     int x,
     int y,
@@ -76,8 +83,8 @@ abstract class WatermarkBridge extends PlatformInterface {
   ///
   /// Returns a [Uint8List] representing the watermarked image.
   Future<Uint8List?> addImageWatermarkUint8List(
-    File filePath,
-    File watermarkImagePath,
+    Uint8List filePath,
+    Uint8List watermarkImagePath,
     int x,
     int y,
     int watermarkWidth,
