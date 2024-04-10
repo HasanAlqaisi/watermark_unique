@@ -1,3 +1,6 @@
+## 0.0.5
+* Fixed problem with IOS background text color 
+
 ## 0.0.4
 
 * Added WEB support.
