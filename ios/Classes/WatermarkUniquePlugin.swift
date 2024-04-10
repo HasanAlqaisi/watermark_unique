@@ -22,14 +22,15 @@ public class WatermarkUniquePlugin: NSObject, FlutterPlugin {
                   let textSize = arguments["textSize"] as? CGFloat,
                   let colorHex = arguments["color"] as? CGFloat,
                   let color = UIColor(rgb: Int(colorHex)),
-                  let colorBackgroundHex = arguments["backgroundTextColor"] as? CGFloat,
-                  let backgroundTextColor = UIColor(rgb: Int(colorBackgroundHex)),
                   let quality = arguments["quality"] as? CGFloat,
                   let imageFormat = arguments["imageFormat"] as? String else {
                 result(FlutterError(code: "ARGUMENT_ERROR", message: "Missing arguments", details: nil))
                 return
             }
-            let backgroundTextColorHex = arguments["backgroundTextColor"] as? String
+            var backgroundTextColor: UIColor?
+            if let colorBackgroundHex = arguments["backgroundTextColor"] as? CGFloat {
+                backgroundTextColor = UIColor(rgb: Int(colorBackgroundHex))
+            }
             let backgroundTextPaddingTop = arguments["backgroundTextPaddingTop"] as? CGFloat
             let backgroundTextPaddingBottom = arguments["backgroundTextPaddingBottom"] as? CGFloat
             let backgroundTextPaddingLeft = arguments["backgroundTextPaddingLeft"] as? CGFloat
